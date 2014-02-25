@@ -1,0 +1,3 @@
+compile nddl first with:
+
+lime rebuild /Users/shadow/Dropbox/02-WD-SF-RetailShopMarketing/openfl/tryoutonme/native/ios ios
