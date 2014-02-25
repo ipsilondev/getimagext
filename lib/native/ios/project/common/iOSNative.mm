@@ -3,6 +3,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 @interface IOSNativeCb : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info;
 @end
@@ -26,17 +32,17 @@
    switch (tmpImage.imageOrientation) {
         case UIImageOrientationDown:
         case UIImageOrientationDownMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"180"];
+            imgOrientation = @"180";
             break;
 
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"90"];
+            imgOrientation = @"90";
             break;
 
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"-90"];
+            imgOrientation = @"-90";
             break;
         case UIImageOrientationUp:
         case UIImageOrientationUpMirrored:
@@ -46,6 +52,9 @@
     path = [path stringByAppendingString:imgOrientation];
    const char *cfilename=[path UTF8String];
    iosnative::call_callback(cfilename);
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    }
       }
      - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
      UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -53,7 +62,9 @@
     [self removeFromParentViewController];
     [self.view removeFromSuperview];
     [window makeKeyAndVisible];
-    
+     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    }
 
     }
      @end
@@ -82,17 +93,17 @@
    switch (tmpImage.imageOrientation) {
         case UIImageOrientationDown:
         case UIImageOrientationDownMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"180"];
+            imgOrientation = @"180";
             break;
 
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"90"];
+            imgOrientation = @"90";
             break;
 
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"-90"];
+            imgOrientation = @"-90";
             break;
         case UIImageOrientationUp:
         case UIImageOrientationUpMirrored:
@@ -102,12 +113,17 @@
     path = [path stringByAppendingString:imgOrientation];
    const char *cfilename=[path UTF8String];
    iosnative::call_callback(cfilename);
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    }
       }
      - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
      UIWindow *window = [UIApplication sharedApplication].keyWindow;
     [picker dismissViewControllerAnimated:YES completion:^{[self dismissPopoverAnimated:YES];}];
     [window makeKeyAndVisible];
-    
+     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    }
 
     }
      @end    
@@ -135,17 +151,17 @@
    switch (tmpImage.imageOrientation) {
         case UIImageOrientationDown:
         case UIImageOrientationDownMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"180"];
+            imgOrientation = @"180";
             break;
 
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"90"];
+            imgOrientation = @"90";
             break;
 
         case UIImageOrientationRight:
         case UIImageOrientationRightMirrored:
-            imgOrientation = [imgOrientation stringByAppendingString:@"-90"];
+            imgOrientation = @"-90";
             break;
         case UIImageOrientationUp:
         case UIImageOrientationUpMirrored:
@@ -205,7 +221,8 @@ namespace iosnative
     function_callback = alloc_root();
     *function_callback = f;
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    if([[UIDevice currentDevice].model isEqual:@"iPad"]){
+    NSArray *supportedOrientations = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UISupportedInterfaceOrientations"];
+    if([[UIDevice currentDevice].model isEqual:@"iPad"] && (SYSTEM_VERSION_LESS_THAN(@"7.0") || [[supportedOrientations objectAtIndex:0] rangeOfString:@"Landscape"].location != NSNotFound)){
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     IOSNativeCb2 *wn = [[IOSNativeCb2 alloc] initWithContentViewController:picker];
