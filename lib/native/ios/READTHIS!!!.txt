@@ -1,0 +1,3 @@
+compile nddl first with:
+
+lime rebuild native/ios ios
