@@ -17,7 +17,9 @@ the **$fullFileName** is the full path to the file, so it can be read from haxe 
 
 **samples** folder contain a ready-to-use project as example, just download and compile using flashdevelop or the command line
 
-Made by **[Ipsilon Developments Inc.](http://www.ipsilondev.com)** released under **BSD license**
+### With love from:
+
+**[Ipsilon Developments Inc.](http://www.ipsilondev.com)** released under **BSD license**
 
 Like our **[Facebook](http://www.facebook.com/ipsilondev)** page to get news about our releases
 
