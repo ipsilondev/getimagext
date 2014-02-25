@@ -13,22 +13,29 @@ Lib folder contain the extensions:
 jn: the java source files for android
 native: has the extension for ios
 
-Supports
-==========
+Made by **[Ipsilon Developments Inc.](http://www.ipsilondev.com)** released under **BSD license**
+
+Like our **[Facebook](http://www.facebook.com/ipsilondev)** page to get news about our releases
+
+Or Follow us on **[Twitter](https://twitter.com/ipsilondev)**
+
+You can also contact us at **info [AT] ipsilondev.com**
+
+### Supports
+
 Tested on android 2.3 and android 4.1. On iOS tested on ipad and iphones with iOS 6 and iOS 7.
 In the case of iOS 6 in ipad OR ipad with iOS 7 in landscape mode (when you set the project.xml in landscape) it will show the camera roll as a popup, as doesn't work in full screen mode.
 
-Known Issues
-==========
+### Known Issues
+
 If you set your project in landscape, it will work on ipad why popupOver can be used to show the camera roll.
-But on iphone, the not supported orientation in views will CRASH the app !!!. I'm not a iOS expert so i don't know this can be solved. if you know how, submit a pull request :)
+**But on iphone, the not supported orientation in views will CRASH the app !!!**. I'm not a iOS expert so i don't know this can be solved. if you know how, submit a pull request :)
 
 
 How to use
 ==========
 
-Android
-==========
+### Android
 
 1) copy lib folder to your root project directory, you can erase the native folder inside if you are not planning to use it for ios
 
@@ -36,11 +43,11 @@ Android
 
 3) edit that AndroidManifest.xml and add before the MainActivity:
 
-<activity android:name="com.ipsilondev.getimagext.IntentManagerZ" android:screenOrientation="portrait" android:configChanges="locale"></activity>
+	<activity android:name="com.ipsilondev.getimagext.IntentManagerZ" android:screenOrientation="portrait" android:configChanges="locale"></activity>
 
 then, on the permission section, at the bottom, add:
 
-  <uses-feature android:name="android.hardware.camera"></uses-feature>
+	<uses-feature android:name="android.hardware.camera"></uses-feature>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> 
 
 
@@ -52,33 +59,33 @@ then, on the permission section, at the bottom, add:
 
 5) be sure to add the JNI import and get the functions with JNI:
 
-import openfl.utils.JNI;
+	import openfl.utils.JNI;
 
-//this returns the app directory
-getDirFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "getAppDir", "()Ljava/lang/String;", true);
-//this initialize the camera, the gallery or a chooser intent depeding the parameter passed
-		filesIntentFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "filesIntent", "(Lorg/haxe/lime/HaxeObject;I)V",true);
+	//this returns the app directory
+	getDirFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "getAppDir", "()Ljava/lang/String;", true);
+	//this initialize the camera, the gallery or a chooser intent depeding the parameter passed
+	filesIntentFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "filesIntent", "(Lorg/haxe/lime/HaxeObject;I)V",true);
 
 6) when you want to show the gallery, the chooser intent or the camera, call the function like this:
 
-Lib.postUICallback( function()
-		{
-			//camera and all other image supported apps intent
-				var ar:Array<Dynamic> = [instance, 1];
-			//camera directly	
-			//	var ar:Array<Dynamic> = [instance, 2];
-			//gallery/apps sources	
-			//	var ar:Array<Dynamic> = [instance,3];
-
-				filesIntentFunc(ar);
-
-		} );
+	Lib.postUICallback( function()
+	{
+	//camera and all other image supported apps intent
+	var ar:Array<Dynamic> = [instance, 1];
+	//camera directly	
+	//var ar:Array<Dynamic> = [instance, 2];
+	//gallery/apps sources	
+	//var ar:Array<Dynamic> = [instance,3];
+	
+	filesIntentFunc(ar);
+	
+	} );
 		
 instance variable is the current class instantiated, and should contain the callback function that receive the path to the file and orientation
 
 7) be sure to declare a function named deviceGalleryFileSelectCallback in the class that would be "instance" 
 
-public function deviceGalleryFileSelectCallback(i:String):Void {
+	public function deviceGalleryFileSelectCallback(i:String):Void {
 		var elems:Array<String> = i.split(";");
 		fileDir.text = "path = "+elems[0];
 		orientation.text = "orientation = "+elems[1];
@@ -86,8 +93,7 @@ public function deviceGalleryFileSelectCallback(i:String):Void {
 	
 And you are done ! now you can read the file and do whatever you want with it.
 
-iOS
-==========
+### iOS
 
 1) copy the lib folder, you can erase the jn folder that is inside if you are not going to use it.
 
@@ -95,24 +101,24 @@ iOS
 
 3) import the haxe class to execute the ios functions
 
-#if ios
-import com.ipsilondev.getimagext.IOS_Native;
-#end
+	#if ios
+	import com.ipsilondev.getimagext.IOS_Native;
+	#end
 
 the macros are important, why if not the execution on any other platform will fail
 
 4) then, in any part when you want to show the camera or the gallery, execute this code:
 
-#if ios
-		iOSGetImgExt = IOS_Native;
-    if (iOSGetImgExt.checkAppDirectory()) {
+	#if ios
+	iOSGetImgExt = IOS_Native;
+    	if (iOSGetImgExt.checkAppDirectory()) {
 			appDir.text = iOSGetImgExt.getAppDir();
 			//iOSGetImgExt.initCamera(deviceGalleryFileSelectCallback);
 			iOSGetImgExt.initGallery(deviceGalleryFileSelectCallback);
 		}else {
 			appDir.text = "can´t create tmp directory";
-		}
-#end
+	}
+	#end
 
 is important to check the app directory first, and do not call the function if that is not possible.
 
