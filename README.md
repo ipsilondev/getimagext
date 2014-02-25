@@ -5,15 +5,17 @@ OpenFL extension for iOS and android to get the image full path from the camera 
 
 To be able to access to image files from sources as camera or gallery in iOS and Android. The extension returns a string in format:
 
-$fullFileName;$ImageOrientation
+**$fullFileName;$ImageOrientation**
 
-the $fullFileName is the full path to the file, so it can be read from haxe with Sys.io for example. For this, on android and ios it require to create a temporal folder in the app directory in the device, so it has extra function that also return the app directory and can be used in your app to read/write new files from haxe directly.
+the **$fullFileName** is the full path to the file, so it can be read from haxe with Sys.io for example. For this, on android and ios it require to create a temporal folder in the app directory in the device, so it has extra function that also return the app directory and can be used in your app to read/write new files from haxe directly.
 
 **lib** folder contain the extensions:
 
 **jn**: the java source files for android
 
 **native**: has the extension for ios
+
+**samples** folder contain a ready-to-use project as example, just download and compile using flashdevelop or the command line
 
 Made by **[Ipsilon Developments Inc.](http://www.ipsilondev.com)** released under **BSD license**
 
