@@ -115,9 +115,13 @@ After that, open your project.xml, and target the KitKat SDK:
 
 1) copy the lib folder, you can erase the jn folder that is inside if you are not going to use it.
 
-2) inside the lib/native/ios folder there is a com folder, cut it and put it where your haxe source files are
+2) in your project.xml, include the path to the library
 
-3) import the haxe class to execute the ios functions
+       <include path="native/ios" if="ios" />
+
+3) inside the lib/native/ios folder there is a com folder, cut it and put it where your haxe source files are
+
+4) import the haxe class to execute the ios functions
 
 	#if ios
 	import com.ipsilondev.getimagext.IOS_Native;
@@ -125,7 +129,7 @@ After that, open your project.xml, and target the KitKat SDK:
 
 the macros are important, why if not the execution on any other platform will fail
 
-4) then, in any part when you want to show the camera or the gallery, execute this code:
+5) then, in any part when you want to show the camera or the gallery, execute this code:
 
 	#if ios
 	iOSGetImgExt = IOS_Native;
