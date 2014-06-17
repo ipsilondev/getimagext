@@ -59,7 +59,9 @@ class Main extends Sprite
 		
 		instance = this;
 		#if android
+		Lib.trace("lala 1");
 		getDirFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "getAppDir", "()Ljava/lang/String;", true);
+		Lib.trace("lala 2");
 		appDir.text = "appDir = "+getDirFunc();
 		filesIntentFunc = JNI.createStaticMethod("com/ipsilondev/getimagext/MainApp", "filesIntent", "(Lorg/haxe/lime/HaxeObject;I)V",true);
 		Lib.postUICallback( function()

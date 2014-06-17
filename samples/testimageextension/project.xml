@@ -20,10 +20,10 @@
 	<!-- including ios extension -->
 	<include path="lib/native/ios" if="ios" />
 	<template path="AndroidManifest.xml" if="android" />
-	
+	<!-- KITKAT = enable this directive below to target KITKAT versions -->
+	<!-- android target-sdk-version="19" / -->
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
-	<assets path="assets/img" rename="img" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

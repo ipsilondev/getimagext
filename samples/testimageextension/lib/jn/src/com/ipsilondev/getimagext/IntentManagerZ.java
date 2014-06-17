@@ -131,9 +131,13 @@ public class IntentManagerZ  extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-
-	        	final String action = data.getAction();
-	        	if(action!=null){
+				String action = null;
+				if(data!=null){
+	        	action = data.getAction();
+	        	}else{
+				action = "we-have-the-url";	
+				}	
+				if(action!=null){
 	        		
 	        		resultOrientation =  getFileOrientation(tmpFILE.getAbsolutePath());
 		        	MainApp.callback.call("deviceGalleryFileSelectCallback", new Object[] {""+tmpFILE.getAbsolutePath()+";"+resultOrientation});
@@ -220,8 +224,14 @@ public class IntentManagerZ  extends Activity {
 		    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 	        cursor.moveToFirst();
 	        return cursor.getString(column_index);
+			
 	 }
-	
+
+
+
+
+
+	 
 	public static int sum(){
 		return 10;
 	}
