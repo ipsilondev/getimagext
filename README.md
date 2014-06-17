@@ -32,7 +32,7 @@ You can also contact us at **info [AT] ipsilondev.com**
 Tested on android 2.3 and android 4.1. On iOS tested on ipad and iphones with iOS 6 and iOS 7.
 In the case of iOS 6 in ipad OR ipad with iOS 7 in landscape mode (when you set the project.xml in landscape) it will show the camera roll as a popup, as doesn't work in full screen mode.
 
-KitKat support provided but require changes and to target API 19 (that means the app will crash on any device with API less than version 11, GingerBread for example) Look for instructions below.
+KitKat support provided but require changes and to target API 19 (that means the app will crash on any device with API less than version 15, GingerBread for example) Look for instructions below.
 
 ### Known Issues
 
@@ -109,7 +109,7 @@ After that, open your project.xml, and target the KitKat SDK:
 
 	<android target-sdk-version="19" />
 	
-**IMPORTANT:** targeting the latest SDK, will render unusable on devices with API less than 11 (GingerBread) and not sure what others bugs or problems can bring (as OpenFL/Haxe target the API 16).
+**IMPORTANT:** targeting the latest SDK, will render unusable on devices with API less than 15 (GingerBread inclusive) and not sure what others bugs or problems can bring (as OpenFL/Haxe target the API 16).
 
 ### iOS
 
