@@ -31,6 +31,7 @@ You can also contact us at **info [AT] ipsilondev.com**
 
 Tested on android 2.3 and android 4.1. On iOS tested on ipad and iphones with iOS 6 and iOS 7.
 In the case of iOS 6 in ipad OR ipad with iOS 7 in landscape mode (when you set the project.xml in landscape) it will show the camera roll as a popup, as doesn't work in full screen mode.
+KitKat support provided but require changes and to target API 19 (that means the app will crash on any device with API less than version 11, GingerBread for example) Look for instructions here.
 
 ### Known Issues
 
@@ -98,6 +99,16 @@ instance variable is the current class instantiated, and should contain the call
 	}
 	
 And you are done ! now you can read the file and do whatever you want with it.
+
+### KitKat support
+
+Unfortunately, the extensions as-is, will crash on KitKat. This is why the way to get the full path of the file changed on this latest version (you can see more about this at **[here](http://stackoverflow.com/questions/20067508/get-real-path-from-uri-android-kitkat-new-storage-access-framework)** )
+Included there is the KitKat version of the extension, just remove the original and rename the KitKat version whiteout the postfix.
+After that, open your project.xml, and target the KitKat SDK:
+
+	<android target-sdk-version="19" />
+	
+**IMPORTANT:** targeting the latest SDK, will render unusable on devices with API less than 11 (GingerBread) and not sure what others bugs or problems can bring (as OpenFL/Haxe target the API 16).
 
 ### iOS
 
